@@ -1,0 +1,26 @@
+# Default: keep text files normalized with LF line endings
+* text=auto eol=lf
+
+# Windows command scripts may use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+*.ps1 text eol=crlf
+
+# Bash scripts must use LF
+*.sh text eol=lf
+
+# C/C++ and build files
+*.c text eol=lf
+*.cpp text eol=lf
+*.h text eol=lf
+*.hpp text eol=lf
+CMakeLists.txt text eol=lf
+*.cmake text eol=lf
+
+# Documentation and diagrams
+*.md text eol=lf
+*.mmd text eol=lf
+*.tex text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf

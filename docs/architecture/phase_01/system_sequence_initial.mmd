@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant OS as Os.cpp / Task_10ms
+    participant SchM as SchM_Rte.cpp
+    participant Sensor as SensorInputSWC
+    participant RTE as RTE API / Rte.cpp
+    participant Tracker as ObjectTrackerSWC
+    participant DEM as Dem.cpp
+    participant NvM as NvM.cpp
+    participant DCM as Dcm.cpp
+
+    Note over Sensor,Tracker: Phase 1 initial end-to-end execution concept
+
+    OS->>SchM: Activate 10 ms cycle
+    SchM->>Sensor: SensorInput_MainCycle()
+    Sensor->>RTE: Rte_Write_ObjectCandidateList(list)
+
+    SchM->>Tracker: ObjectTracker_MainCycle()
+    Tracker->>RTE: Rte_Read_ObjectCandidateList(&list)
+    RTE-->>Tracker: ObjectCandidateList_T
+
+    Tracker->>Tracker: Evaluate candidates O(n)
+
+    alt Invalid or timeout sensor quality
+        Tracker->>RTE: Rte_Call_ReportDiagnosticEvent(...)
+        RTE->>DEM: Report InvalidSensorQualityEvent
+    end
+
+    alt Candidate rejected
+        Tracker->>RTE: Rte_Call_UpdateDiagnosticCounter(...)
+        RTE->>NvM: Update FalsePositiveCounter
+    end
+
+    Tracker->>RTE: Rte_Write_TrackedObjectStatus(status)
+    Tracker->>RTE: Rte_Write_ObjectAlertOutput(alert)
+
+    DCM->>RTE: Diagnostic read request DID 0xD100
+    RTE->>Tracker: ObjectTracker_DiagnosticRead()
+    Tracker-->>RTE: Tracking status / counters
+    RTE-->>DCM: Diagnostic response data

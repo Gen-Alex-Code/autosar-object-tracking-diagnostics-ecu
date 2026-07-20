@@ -1,0 +1,16 @@
+flowchart TD
+    L[Learning] --> PRA[Portfolio Reference Architecture<br/>autosar-object-tracking-diagnostics-ecu]
+
+    PRA --> AUTOSAR[autosar-ecu-diagnostics-demo]
+    PRA --> STM32[STM32 Peripheral Driver Framework]
+    PRA --> RTOS[FreeRTOS Task Scheduler Demo]
+    PRA --> CAN[Automotive CAN Communication Stack]
+    PRA --> LINUX[Embedded Linux Gateway Simulator]
+
+    AUTOSAR --> HUB[Embedded Systems Portfolio Hub]
+    STM32 --> HUB
+    RTOS --> HUB
+    CAN --> HUB
+    LINUX --> HUB
+
+    HUB --> FUTURE[Future Projects]

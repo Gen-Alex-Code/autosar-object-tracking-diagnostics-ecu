@@ -1,0 +1,51 @@
+flowchart TD
+    subgraph APP[Application Layer]
+        SENSOR[SensorInputSWC<br/>Input adapter / producer]
+        TRACKER[ObjectTrackerSWC<br/>Candidate validation + diagnostics]
+    end
+
+    subgraph RTE[RTE Layer - Simulated Generated]
+        RTEAPI[RTE API Headers<br/>Rte_ObjectTrackerSWC.hpp]
+        RTECORE[RTE Core Mapping<br/>Rte.cpp]
+        SCHM[Scheduler Glue<br/>SchM_Rte.cpp]
+    end
+
+    subgraph BSW[Basic Software - Simulated]
+        subgraph SL[Services Layer]
+            subgraph SYS[System Services]
+                OS[OS / Scheduler<br/>Os.cpp]
+                DEM[DEM Concept<br/>Dem.cpp]
+            end
+
+            subgraph COMS[Communication Services]
+                COM[COM Concept<br/>Com.cpp]
+                DCM[DCM Concept<br/>Dcm.cpp]
+            end
+
+            subgraph MEM[Memory Services]
+                NVM[NvM Concept<br/>NvM.cpp]
+            end
+        end
+
+        subgraph ECUAL[ECU Abstraction / MCAL-like Simulation]
+            SENSORHW[Sensor Input Simulation]
+            STORAGE[Persistent Storage Simulation]
+            ALERTIO[Alert Output Abstraction<br/>Future GPIO/PWM mapping]
+        end
+    end
+
+    SENSOR --> RTEAPI
+    TRACKER --> RTEAPI
+    RTEAPI <--> RTECORE
+
+    OS --> SCHM
+    SCHM --> SENSOR
+    SCHM --> TRACKER
+
+    SENSORHW --> SENSOR
+    COM --> RTECORE
+    DCM --> RTECORE
+    RTECORE --> DEM
+    RTECORE --> NVM
+    NVM --> STORAGE
+    RTECORE --> ALERTIO
