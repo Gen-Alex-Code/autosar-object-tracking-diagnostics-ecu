@@ -1,0 +1,53 @@
+flowchart TD
+    subgraph APP[Application Layer]
+        SENSOR[SensorInputSWC<br/>Controlled candidate-list producer]
+        TRACKER[ObjectTrackerSWC<br/>Validation + lifecycle + alert + diag data]
+    end
+
+    subgraph RTE[RTE Layer - Simulated Generated]
+        RTEAPI[RTE API Headers]
+        RTECORE[RTE Core Mapping]
+        SCHM[Scheduler Glue]
+    end
+
+    subgraph BSW[Basic Software - Simulated / Future Detailed Phases]
+        subgraph SYS[System Services]
+            OS[OS / Scheduler]
+            DEM[DEM Concept]
+        end
+
+        subgraph COMS[Communication Services]
+            DCM[DCM Concept]
+            COM[COM Concept]
+        end
+
+        subgraph MEM[Memory Stack]
+            NVM[NvM Concept<br/>Memory Service]
+            MEMIF[Memory Abstraction Concept]
+            STORAGE[Persistent Storage Simulation<br/>host file / in-memory backend]
+        end
+
+        subgraph ECUAL[ECU Abstraction / MCAL-like Simulation]
+            SENSORHW[Sensor Input Simulation]
+            ALERTIO[Alert Output Abstraction<br/>future GPIO/PWM mapping]
+        end
+    end
+
+    SENSOR -->|ObjectCandidateList_T| RTEAPI
+    RTEAPI -->|ObjectCandidateList_T| TRACKER
+    TRACKER -->|TrackedObjectStatus_T| RTEAPI
+    TRACKER -->|ObjectAlertOutput_T| RTEAPI
+    TRACKER -->|Diagnostic event call| RTEAPI
+    TRACKER -->|Counter update call| RTEAPI
+    DCM -->|Diagnostic read request| RTEAPI
+    RTEAPI -->|Diagnostic read access| TRACKER
+    RTEAPI --> DEM
+    RTEAPI --> NVM
+    RTEAPI --> DCM
+    NVM --> MEMIF
+    MEMIF --> STORAGE
+    OS --> SCHM
+    SCHM --> SENSOR
+    SCHM --> TRACKER
+    SENSORHW --> SENSOR
+    RTEAPI --> ALERTIO

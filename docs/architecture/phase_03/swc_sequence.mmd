@@ -1,0 +1,39 @@
+sequenceDiagram
+    participant OS as Simulated OS / Task_10ms
+    participant SchM as Scheduler Glue
+    participant Sensor as SensorInputSWC
+    participant RTE as Simulated RTE
+    participant Tracker as ObjectTrackerSWC
+    participant DEM as DEM Service
+    participant NVM as NvM Counter Service
+    participant DCM as DCM Service
+
+    OS->>SchM: Activate 10 ms task
+    SchM->>Sensor: SensorInput_MainCycle()
+    Sensor->>RTE: Rte_Write_ObjectCandidateList(list)
+
+    SchM->>Tracker: ObjectTracker_MainCycle()
+    Tracker->>RTE: Rte_Read_ObjectCandidateList(&list)
+    RTE-->>Tracker: ObjectCandidateList_T from same 10 ms activation
+
+    Tracker->>Tracker: Validate candidates
+    Tracker->>Tracker: Select primary object
+    Tracker->>Tracker: Update tracking lifecycle
+
+    alt Invalid or timeout condition
+        Tracker->>RTE: Rte_Call_ReportDiagnosticEvent(...)
+        RTE->>DEM: Report event
+    end
+
+    alt Counter update needed
+        Tracker->>RTE: Rte_Call_IncrementCounter(...)
+        RTE->>NVM: Update persistent counter
+    end
+
+    Tracker->>RTE: Rte_Write_TrackedObjectStatus(status)
+    Tracker->>RTE: Rte_Write_ObjectAlertOutput(alert)
+
+    DCM->>RTE: Diagnostic read request
+    RTE->>Tracker: ObjectTracker_DiagnosticRead(&snapshot)
+    Tracker-->>RTE: TrackingDiagnosticSnapshot_T
+    RTE-->>DCM: Diagnostic response data

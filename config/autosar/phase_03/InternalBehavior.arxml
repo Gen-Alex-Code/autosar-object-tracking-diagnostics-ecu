@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Representative educational ARXML fragment.
+Not production-valid AUTOSAR configuration.
+
+Note:
+The namespace URI http://autosar.org/schema/r4.0 is an XML namespace identifier.
+It is not expected to behave as a browsable website.
+-->
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>InternalBehavior</SHORT-NAME>
+      <ELEMENTS>
+        <SWC-INTERNAL-BEHAVIOR>
+          <SHORT-NAME>SensorInputSWC_InternalBehavior</SHORT-NAME>
+          <RUNNABLES>
+            <RUNNABLE-ENTITY>
+              <SHORT-NAME>SensorInput_MainCycle</SHORT-NAME>
+            </RUNNABLE-ENTITY>
+          </RUNNABLES>
+          <EVENTS>
+            <TIMING-EVENT>
+              <SHORT-NAME>EVT_10MS_SENSOR_INPUT</SHORT-NAME>
+              <PERIOD>0.01</PERIOD>
+            </TIMING-EVENT>
+          </EVENTS>
+        </SWC-INTERNAL-BEHAVIOR>
+
+        <SWC-INTERNAL-BEHAVIOR>
+          <SHORT-NAME>ObjectTrackerSWC_InternalBehavior</SHORT-NAME>
+          <RUNNABLES>
+            <RUNNABLE-ENTITY>
+              <SHORT-NAME>ObjectTracker_MainCycle</SHORT-NAME>
+            </RUNNABLE-ENTITY>
+            <RUNNABLE-ENTITY>
+              <SHORT-NAME>ObjectTracker_DiagnosticRead</SHORT-NAME>
+            </RUNNABLE-ENTITY>
+          </RUNNABLES>
+          <EVENTS>
+            <TIMING-EVENT>
+              <SHORT-NAME>EVT_10MS_OBJECT_TRACKER</SHORT-NAME>
+              <PERIOD>0.01</PERIOD>
+            </TIMING-EVENT>
+            <OPERATION-INVOKED-EVENT>
+              <SHORT-NAME>EVT_DIAG_READ_TRACKER_DATA</SHORT-NAME>
+            </OPERATION-INVOKED-EVENT>
+          </EVENTS>
+        </SWC-INTERNAL-BEHAVIOR>
+      </ELEMENTS>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>

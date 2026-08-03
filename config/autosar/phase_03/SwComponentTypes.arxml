@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Representative educational ARXML fragment.
+Not production-valid AUTOSAR configuration.
+
+Note:
+The namespace URI http://autosar.org/schema/r4.0 is an XML namespace identifier.
+It is not expected to behave as a browsable website.
+-->
+<AUTOSAR xmlns="http://autosar.org/schema/r4.0">
+  <AR-PACKAGES>
+    <AR-PACKAGE>
+      <SHORT-NAME>SwComponentTypes</SHORT-NAME>
+      <ELEMENTS>
+        <APPLICATION-SW-COMPONENT-TYPE>
+          <SHORT-NAME>SensorInputSWC</SHORT-NAME>
+          <PORTS>
+            <P-PORT-PROTOTYPE>
+              <SHORT-NAME>Pp_ObjectCandidateList</SHORT-NAME>
+            </P-PORT-PROTOTYPE>
+          </PORTS>
+        </APPLICATION-SW-COMPONENT-TYPE>
+
+        <APPLICATION-SW-COMPONENT-TYPE>
+          <SHORT-NAME>ObjectTrackerSWC</SHORT-NAME>
+          <PORTS>
+            <R-PORT-PROTOTYPE>
+              <SHORT-NAME>Rp_ObjectCandidateList</SHORT-NAME>
+            </R-PORT-PROTOTYPE>
+            <P-PORT-PROTOTYPE>
+              <SHORT-NAME>Pp_TrackedObjectStatus</SHORT-NAME>
+            </P-PORT-PROTOTYPE>
+            <P-PORT-PROTOTYPE>
+              <SHORT-NAME>Pp_ObjectAlertOutput</SHORT-NAME>
+            </P-PORT-PROTOTYPE>
+            <R-PORT-PROTOTYPE>
+              <SHORT-NAME>Rp_DiagnosticEvent</SHORT-NAME>
+            </R-PORT-PROTOTYPE>
+            <R-PORT-PROTOTYPE>
+              <SHORT-NAME>Rp_DiagnosticCounter</SHORT-NAME>
+            </R-PORT-PROTOTYPE>
+            <P-PORT-PROTOTYPE>
+              <SHORT-NAME>Pp_TrackingDiagnosticRead</SHORT-NAME>
+            </P-PORT-PROTOTYPE>
+          </PORTS>
+        </APPLICATION-SW-COMPONENT-TYPE>
+      </ELEMENTS>
+    </AR-PACKAGE>
+  </AR-PACKAGES>
+</AUTOSAR>
